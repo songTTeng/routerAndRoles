@@ -6,6 +6,8 @@
 # install dependency
 npm install
 
+# 如若安装太慢运行如下命令
+npm install --registry=https://registry.npm.taobao.org
 # develop
 npm run dev
 ```
