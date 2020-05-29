@@ -88,6 +88,20 @@ export const constantRoutes = [
         meta: { title: 'Form', icon: 'form' }
       }
     ]
+  },
+  {
+    path: '/systemManage',
+    component: Layout,
+    alwaysShow: true, // 如果只有一个路由 是否显示下拉箭头
+    meta: { title: '系统管理', icon: 'table'},
+    children: [
+      {
+        path: 'menu',
+        name: '菜单管理',
+        component: () => import('@/views/systemManage/menu'),
+        meta: { title: '菜单管理', icon: 'form' }
+      }
+    ]
   }
 ]
 

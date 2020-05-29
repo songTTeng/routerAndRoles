@@ -66,6 +66,20 @@ service.interceptors.response.use(
       //   })
       // }
       return Promise.reject(new Error(res.message || 'Error'))
+    }else if(res.status == 401){
+         MessageBox.confirm('登录失效，请重新登录', 'Confirm logout', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
+        })
+      // Message.error({ message: '登录失效，请重新登录' })
+      // setTimeout(() => {
+      //   store.dispatch('user/logout')
+      // }, 500)
     } else {
       return res.data
     }
