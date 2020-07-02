@@ -25,14 +25,7 @@ export function login(tenantId, username, password, type) {
     }
   })
 }
-// export function getInfo(token) {
-//   return request({
-//     url: '/vue-admin-template/user/info',
-//     method: 'get',
-//     params: { token }
-//   })
-// }
-export function getInfo(token) {
+export function getInfo(token) {  //获取当前账号的基本信息
   return request({
     url:global.blade_user + '/role-route',
     method: 'get',
@@ -40,9 +33,33 @@ export function getInfo(token) {
   })
 }
 
-export function generateRoutes(params) {
+export function generateRoutes(params) {  //获取当前账号的菜单
   return request({
-    url: global.blade_user +'/activity-route',
+    // url: global.blade_user +'/activity-route',
+    url:global.blade_system + '/menuCustom/auth-routes',
+    method: 'get',
+    params
+  })
+}
+
+export function getAllRoutes(params) { //获取全部的路由地址
+  return request({
+    url: global.blade_system +'/menuCustom/grant-tree',
+    method: 'get',
+    params
+  })
+}
+export function setGrant(data) { //设置路由权限
+  return request({
+    url: global.blade_system +'/menuCustom/grant',
+    method: 'post',
+    data
+  })
+}
+
+export function getRoleTreeKeys(params) { //获取路由权限id进行回显使用
+  return request({
+    url: global.blade_system +'/menuCustom/role-tree-keys',
     method: 'get',
     params
   })
@@ -55,3 +72,11 @@ export function logout() {
   })
 }
 
+//获取角色接口
+export function getRoleList(params) {
+  return request({
+    url: global.blade_system +'/role/list',
+    method: 'get',
+    params
+  })
+}

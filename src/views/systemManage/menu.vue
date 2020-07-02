@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-button type="primary" @click="showMenu">添加菜单</el-button>
     <div class="allmenu">
       <el-table
         :data="allMenu"
@@ -24,7 +25,7 @@
         <el-table-column prop="name" label="菜单名称" header-align="center" align="center"></el-table-column>
         <el-table-column prop="redirect" label="菜单重定向">
              <template slot-scope="scope">
-                 {{scope.row.redirect ? scope.row.redirect : 'noRedirects'}}
+                 {{scope.row.redirect ? scope.row.redirect : 'noRedirect'}}
             </template>
         </el-table-column>
         <el-table-column prop="meta.title" label="title" header-align="center" align="center"></el-table-column>
@@ -35,11 +36,16 @@
         </el-table-column>
       </el-table>
     </div>
+    <show-menu ref="getAllMenu"></show-menu>
   </div>
 </template>
 
 <script>
+import showMenu from "@/components/menuDig/index"
 export default {
+  components:{
+    showMenu
+  },
   data() {
     return {
       allMenu: [
@@ -106,7 +112,7 @@ export default {
               routeId: 31,
               path: "index",
               component: "guide/index",
-               hidden:false,
+              hidden:false,
               name: "Guide",
               meta: { title: "Guide", icon: "eye-open", noCache: true }
             }
@@ -115,7 +121,16 @@ export default {
       ]
     };
   },
-  methods: {}
+  methods: {
+    showMenu(){
+      let obj = {
+        id:row.id,
+        type:'edit',
+        flag:false
+      }
+      this.$refs.getAllMenu.show(obj)
+    }
+  }
 };
 </script>
 

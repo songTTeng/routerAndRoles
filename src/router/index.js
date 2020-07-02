@@ -51,50 +51,23 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
-  },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
   },
   {
     path: '/systemManage',
+    redirect: 'noRedirect',
     component: Layout,
-    alwaysShow: true, // 如果只有一个路由 是否显示下拉箭头
+    alwaysShow: true, 
+    hidden: false,
     meta: { title: '系统管理', icon: 'table'},
     children: [
+      {
+        path: 'roleManage',
+        name: '角色管理',
+        component: () => import('@/views/systemManage/roleManage'),
+        meta: { title: '角色管理', icon: 'form' }
+      },
       {
         path: 'menu',
         name: '菜单管理',
@@ -104,7 +77,6 @@ export const constantRoutes = [
     ]
   }
 ]
-
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
@@ -167,18 +139,6 @@ export const asyncRoutes = [
       }
     ]
   },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

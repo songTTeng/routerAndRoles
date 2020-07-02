@@ -60,33 +60,37 @@ const actions = {
       // commit('SET_ROUTES', accessedRoutes)
       // resolve(accessedRoutes)
      //  用到roles
-     console.log("thissss",this.getters.name)
-     generateRoutes({userName:"admin"}).then(res => {
+     console.log("thissss",this.getters.roles.join(","),roles)
+     let getRoles = roles.join(",")
+      generateRoutes({roleIds:getRoles}).then(res => {
+      // generateRoutes({userName:'admin'}).then(res => {
         if(res.code == 200){
           let getRouter = []
           let childrenArr = []
-          res.data.forEach(item=>{
-            if(item.children && item.children.length>0){
-              item.children.forEach((x,y)=>{
-                childrenArr.push({
-                  path: x.path,
-                  name: x.name,
-                  meta: x.meta,
-                  hidden: x.hidden ? true : false, // 不在侧边栏线上
-                  component:_import(x.component)   //解决路由不能找到问题
+          if(res.data && res.data.length !=0){
+            res.data.forEach(item=>{
+              if(item.children && item.children.length>0){
+                item.children.forEach((x,y)=>{
+                  childrenArr.push({
+                    path: x.path,
+                    name: x.name,
+                    meta: x.meta,
+                    hidden: x.hidden ? true : false, // 不在侧边栏线上
+                    component:_import(x.component)   //解决路由不能找到问题
+                  })
                 })
-              })
-              getRouter.push({
-                path: item.path,
-                component:Layout,
-                redirect:item.redirect,
-                name: item.name ? item.name : '',
-                alwaysShow: item.alwaysShow ? true : false, // 如果只有一个路由 是否显示下拉箭头
-                meta: item.meta,
-                children: childrenArr
-              })
-            }
-          })
+                getRouter.push({
+                  path: item.path,
+                  component:Layout,
+                  redirect:item.redirect ? item.redirect : null,
+                  name: item.name ? item.name : '',
+                  alwaysShow: item.alwaysShow ? true : false, // 如果只有一个路由 是否显示下拉箭头
+                  meta: item.meta ? item.meta : null,
+                  children: childrenArr
+                })
+              }
+            })
+          }
           getRouter.push({ path: '*', redirect: '/404', hidden: true })
           let accessedRoutes
           if (roles.includes('admin')) {
